@@ -70,19 +70,19 @@ public class CheckSignInterceptor extends HandlerInterceptorAdapter {
         String queryString = request.getQueryString();
         if (StringUtils.isEmpty(queryString))
             return result;
-        try {
-            queryString = URLDecoder.decode(queryString, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            logger.error("url decode query string failed!\n", e);
-            return result;
-        }
+//        try {
+//            queryString = URLDecoder.decode(queryString, "UTF-8");
+//        } catch (UnsupportedEncodingException e) {
+//            logger.error("url decode query string failed!\n", e);
+//            return result;
+//        }
         String[] paramWithValues = queryString.split("&");
         for (String paramWithValue : paramWithValues) {
             String[] paramAndValue = paramWithValue.split("=");
             if(!"sign".equals(paramAndValue[0])) {
-                if("token".equals(paramAndValue[0])){
+                if(!"token".equals(paramAndValue[0])){
                     try {
-                        paramAndValue[1] = URLEncoder.encode(paramAndValue[1],"UTF-8");
+                        paramAndValue[1] = URLDecoder.decode(paramAndValue[1],"UTF-8");
                     } catch (UnsupportedEncodingException e) {
                         logger.error(e.getMessage());
                     }
